@@ -38,11 +38,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Street
+  - name: Sky
+    uniqueID: 2909369111
+    locked: 0
+  - name: Backgrund 1
     uniqueID: 2023366593
+    locked: 0
+  - name: Middle Ground 1
+    uniqueID: 2852778159
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground 1
+    uniqueID: 3761345627
     locked: 0
   m_RenderingLayers:
   - Default
