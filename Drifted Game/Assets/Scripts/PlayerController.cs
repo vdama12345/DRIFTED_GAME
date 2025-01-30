@@ -22,18 +22,23 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         anim = GetComponent<Animator>();
-
     }
 
     private void Update()
     {
         float horizontalInput = 0;
 
+        // Handle movement for player 1 (WASD or other keys)
         if (Input.GetKey(right) || Input.GetKey(left))
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.linearVelocity.y);
+            if (Input.GetKey(right))
+                horizontalInput = 1; // Move right
+            else if (Input.GetKey(left))
+                horizontalInput = -1; // Move left
 
+            body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y);
+
+            // Flip the sprite based on the direction
             if (horizontalInput > 0.01f)
             {
                 Vector3 currentScale = transform.localScale;
@@ -45,7 +50,6 @@ public class PlayerController : MonoBehaviour
             }
             else if (horizontalInput < -0.01f)
             {
-
                 Vector3 currentScale = transform.localScale;
                 if (currentScale.x > 0)
                 {
@@ -53,31 +57,29 @@ public class PlayerController : MonoBehaviour
                 }
                 transform.localScale = currentScale;
             }
-
-
         }
 
+        // Jump if the player presses the "up" key and is grounded
         if (Input.GetKey(up) && grounded)
         {
             Jump();
         }
 
+        // Update animation states
         anim.SetBool("Run", horizontalInput != 0);
         anim.SetBool("Grounded", grounded);
     }
 
     private void Jump()
     {
-        body.linearVelocity = new Vector2(body.linearVelocity.x, speed);
+        body.linearVelocity = new Vector2(body.linearVelocity.x, speed); // Apply jump force
         anim.SetTrigger("Jump");
         grounded = false;
-
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             grounded = true;
         }
