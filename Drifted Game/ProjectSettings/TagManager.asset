@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Player 1
+  - Player 2
+  - Player 3
+  - Player 4
+  - Death Plane
+  - Platform Switch
   layers:
   - Default
   - TransparentFX
