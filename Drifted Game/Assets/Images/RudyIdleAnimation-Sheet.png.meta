@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RudyIdleAnimation-Sheet_0: -5577136162461986294
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
