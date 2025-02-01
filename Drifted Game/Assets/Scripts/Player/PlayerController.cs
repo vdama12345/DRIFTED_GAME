@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private DialogueUI dialogueUI;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpingPower = 10f;
     [SerializeField] private GameObject projectilePrefab; // Projectile Prefab
@@ -23,6 +25,11 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     private List<GameObject> players;
 
+    public DialogueUI DialogueUI => dialogueUI;
+    public IInteractable Interactable { get; set; }
+
+
+
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -39,16 +46,16 @@ public class PlayerController : MonoBehaviour
     {
         string currentScene = SceneManager.GetActiveScene().name;
 
-        HandleNormalSceneMovement();
+        HandleNormalSceneMovement(currentScene);
 
         UpdateCameraPosition(currentScene);
     }
-    private void HandleNormalSceneMovement()
+    private void HandleNormalSceneMovement(string currentScene)
     {
-        HandleMovementInput();
+        HandleMovementInput(currentScene);
     }
 
-    private void HandleMovementInput()
+    private void HandleMovementInput(string currentScene)
     {
         float horizontalInput = 0;
 
@@ -79,7 +86,14 @@ public class PlayerController : MonoBehaviour
             {
                 if (p.tag == "Player 1")
                 {
-                    ShootProjectile();
+                    if (currentScene == "OpeningStreet")
+                    {
+                        Interactable?.Interact(this);
+                    }
+                    else
+                    {
+                        ShootProjectile();
+                    }
                 }
             }
         }

@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
+  dialogue:
+  - First Line
+  - 'Second Line
+
+'
+  responses:
+  - responseText: Yes
+    dialogueObject: {fileID: 11400000, guid: 9baf540fa7c9d4c44a2101a83c76b6fd, type: 2}
+  - responseText: No
+    dialogueObject: {fileID: 11400000, guid: 14656e5c460568b4f8b855d4db76b3d6, type: 2}
