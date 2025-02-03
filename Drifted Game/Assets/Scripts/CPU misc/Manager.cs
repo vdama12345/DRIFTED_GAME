@@ -7,11 +7,8 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
 
     public TextMeshProUGUI scoreText;
-    [SerializeField] public int score = 0;
-    [SerializeField] private int totalCPUs = 3;
-
-
-
+    public int score = 0;
+    [SerializeField] public int totalCPUs = 3;
 
     private void Awake()
     {
@@ -25,7 +22,6 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-
     public void AddScore(string cpuName)
     {
         score++;
@@ -33,9 +29,17 @@ public class ScoreManager : MonoBehaviour
         Debug.Log($"Score updated: {score}/{totalCPUs}");
     }
 
-    private void UpdateScoreText()
+    public void ResetScore()
     {
-        scoreText.text = $"{score}/{totalCPUs}";
+        score = 0;
+        UpdateScoreText();
     }
 
+    public void UpdateScoreText()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = $"{score}/{totalCPUs}";
+        }
+    }
 }

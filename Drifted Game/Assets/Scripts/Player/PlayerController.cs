@@ -261,7 +261,10 @@ public class PlayerController : MonoBehaviour
     {
         if (projectilePrefab != null && projectileSpawnPoint != null)
         {
-            GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+            // Add a slight offset to spawn the projectile higher
+            Vector3 spawnPosition = projectileSpawnPoint.position + new Vector3(0, 0.5f, 0); // Adjust 0.5f as needed
+
+            GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
             Rigidbody2D projectileBody = projectile.GetComponent<Rigidbody2D>();
             if (projectileBody != null)
             {

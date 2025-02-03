@@ -10,7 +10,7 @@ public class CPUCollectible : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player 1") || other.CompareTag("Player 2") || other.CompareTag("Player 3")) 
+        if (other.CompareTag("Player 1") || other.CompareTag("Player 2") || other.CompareTag("Player 3") || other.CompareTag("Player 4")) 
         {
             collectedByPlayer = other.tag; 
             Debug.Log($"Collected: {gameObject.name} by {collectedByPlayer}"); 
@@ -19,5 +19,8 @@ public class CPUCollectible : MonoBehaviour
             CPU.SetActive(false); 
         }
     }
+
+    
+
 
 }
