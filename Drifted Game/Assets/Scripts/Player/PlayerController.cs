@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     {
         string currentScene = SceneManager.GetActiveScene().name;
 
+        if (dialogueUI.IsOpen) return;
+
         HandleNormalSceneMovement(currentScene);
 
         UpdateCameraPosition(currentScene);
@@ -84,7 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach (var p in players)
             {
-                if (p.tag == "Player 1")
+                if (p.CompareTag("Player 1"))
                 {
                     if (currentScene == "OpeningStreet")
                     {

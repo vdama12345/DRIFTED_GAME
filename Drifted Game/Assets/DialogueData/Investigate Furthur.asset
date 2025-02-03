@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
+  m_Name: Investigate Furthur
+  m_EditorClassIdentifier: 
+  dialogueEntries:
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: What is that? Look at the main city,  its shattered into pieces
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: WHAAT IS GOING ON IN THIS TOWN!!
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: You're inclined to walk towards the portal, it draws you in
+  responses: []

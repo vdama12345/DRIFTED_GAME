@@ -1,13 +1,17 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class Response
 {
     [SerializeField] private string responseText;
     [SerializeField] private DialogueObject dialogueObject;
-    [SerializeField] private MonoBehaviour postDialogueScript; // Optional script
+    [SerializeField] private UnityEvent postDialogueEvent = new();  // Optional script
 
     public string ResponseText => responseText;
     public DialogueObject DialogueObject => dialogueObject;
-    public MonoBehaviour PostDialogueScript => postDialogueScript;
+    public void InvokePostDialogueEvent()
+    {
+        postDialogueEvent?.Invoke();
+    }
 }
