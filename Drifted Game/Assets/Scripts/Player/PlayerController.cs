@@ -1,23 +1,32 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private DialogueUI dialogueUI;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpingPower = 10f;
-    [SerializeField] private GameObject projectilePrefab; // Projectile Prefab
-    [SerializeField] private Transform projectileSpawnPoint; // Spawn point for projectile
-    [SerializeField] private float projectileSpeed = 10f; // Speed of projectile
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private KeyCode right;
     [SerializeField] private KeyCode left;
     [SerializeField] private KeyCode up;
     [SerializeField] private KeyCode action;
+    [SerializeField] private Text canvasText; // Text to display messages
+    private bool isWallRunning = false; // This will keep track of whether the player is currently wall running
 
+
+    private GameObject currentPlayer;
     private bool grounded;
+    [HideInInspector] public static bool superJumpUsed = false;
+    private bool speedBoostActive = false;
+    private float speedBoostTimer = 0f;
+    private float speedBoostCooldown = 40f;
+    private float speedBoostDuration = 10f;
     private Animator anim;
     private Rigidbody2D body;
 
@@ -27,8 +36,6 @@ public class PlayerController : MonoBehaviour
 
     public DialogueUI DialogueUI => dialogueUI;
     public IInteractable Interactable { get; set; }
-
-
 
     private void Awake()
     {
@@ -40,21 +47,37 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         players = GetActivePlayers();
+
+        SetCurrentPlayer();
     }
 
     private void Update()
     {
         string currentScene = SceneManager.GetActiveScene().name;
 
-        if (dialogueUI.IsOpen) return;
+        if (dialogueUI != null && dialogueUI.IsOpen) return;
 
         HandleNormalSceneMovement(currentScene);
-
         UpdateCameraPosition(currentScene);
     }
+
     private void HandleNormalSceneMovement(string currentScene)
     {
         HandleMovementInput(currentScene);
+    }
+
+    private void SetCurrentPlayer()
+    {
+        for (int i = 1; i <= 4; i++)
+        {
+            GameObject player = GameObject.FindWithTag("Player " + i);
+            if (player != null && player == gameObject) // Ensure it's this instance
+            {
+                currentPlayer = player;
+                Debug.Log(currentPlayer);
+                break;
+            }
+        }
     }
 
     private void HandleMovementInput(string currentScene)
@@ -84,10 +107,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(action))
         {
-            foreach (var p in players)
+            Debug.Log(currentPlayer);
+            if (currentPlayer != null)
             {
-                if (p.CompareTag("Player 1"))
+                if (currentPlayer.CompareTag("Player 1"))
                 {
+                    Debug.Log(currentPlayer);
                     if (currentScene == "OpeningStreet")
                     {
                         Interactable?.Interact(this);
@@ -97,32 +122,178 @@ public class PlayerController : MonoBehaviour
                         ShootProjectile();
                     }
                 }
+                else if (currentPlayer.CompareTag("Player 2") && currentScene != OpeningStreetScene)
+                {
+                    Debug.Log(currentPlayer);
+                    HandleSuperJump(currentPlayer);
+                }
+                else if (currentPlayer.CompareTag("Player 3") && currentScene != OpeningStreetScene)
+                {
+                    Debug.Log(currentPlayer);
+                    HandleVerticalWallRun(currentPlayer);
+                }
+                else if (currentPlayer.CompareTag("Player 4") && currentScene != OpeningStreetScene)
+                {
+                    Debug.Log(currentPlayer);
+                    HandleSpeedBoost(currentPlayer);
+                }
             }
+            Debug.Log(currentPlayer);
         }
-
 
         anim.SetBool("Run", horizontalInput != 0);
         anim.SetBool("Grounded", grounded);
+
+        if (speedBoostActive)
+        {
+            speedBoostTimer -= Time.deltaTime;
+            if (speedBoostTimer <= 0f)
+            {
+                speedBoostActive = false;
+                speed = 5f; // Reset speed
+            }
+        }
+    }
+
+    private void HandleSuperJump(GameObject player)
+    {
+        if (!superJumpUsed)
+        {
+            Rigidbody2D playerBody = player.GetComponent<Rigidbody2D>();
+            playerBody.linearVelocity = new Vector2(playerBody.linearVelocity.x, jumpingPower * 1.8f); // Higher jump
+            superJumpUsed = true;
+        }
+        else
+        {
+            DisplayCanvasMessage("Super jump can only be used once per level.");
+        }
+    }
+
+    private void HandleVerticalWallRun(GameObject player)
+    {
+        // Ensure that only Player 3 can trigger the action
+        if (!player.CompareTag("Player 3")) return;
+
+        Rigidbody2D playerBody = player.GetComponent<Rigidbody2D>();
+
+        // Toggle wall run on key press
+        if (Input.GetKeyDown(action))
+        {
+            // If player is already wall running, stop
+            if (isWallRunning)
+            {
+                StopWallRun(playerBody, player);
+            }
+            else
+            {
+                StartWallRun(playerBody, player);
+            }
+        }
+    }
+
+    private void StartWallRun(Rigidbody2D playerBody, GameObject player)
+    {
+        // Raycast to check if a wall is nearby
+        RaycastHit2D hit = Physics2D.Raycast(player.transform.position, Vector2.right * transform.localScale.x, 0.5f);
+
+        if (hit.collider != null && hit.collider.CompareTag("Wall"))
+        {
+            // Start wall run
+            playerBody.gravityScale = 0f;
+            playerBody.linearVelocity = new Vector2(0f, speed); // Move upwards at a fixed speed
+            player.transform.rotation = Quaternion.Euler(0f, 0f, -90f * Mathf.Sign(transform.localScale.x)); // Align player to the wall
+
+            isWallRunning = true; // Set wall running state to true
+        }
+        else
+        {
+            // If no wall is detected, display a message or prevent wall run
+            DisplayCanvasMessage("No wall detected for wall running.");
+        }
+    }
+
+    private void StopWallRun(Rigidbody2D playerBody, GameObject player)
+    {
+        // Reset the player's state when wall running stops
+        playerBody.gravityScale = 1f; // Reset gravity to default
+        player.transform.rotation = Quaternion.identity; // Reset player rotation to normal
+        isWallRunning = false; // Set wall running state to false
+    }
+
+    private void HandleSpeedBoost(GameObject player)
+    {
+        if (speedBoostActive)
+        {
+            DisplayCanvasMessage("Speed boost is on cooldown.");
+            return;
+        }
+
+        speedBoostActive = true;
+        speed = 10f;
+        speedBoostTimer = speedBoostDuration;
+        Invoke(nameof(ResetSpeedBoost), speedBoostDuration);
+        Invoke(nameof(ClearCanvasMessage), speedBoostCooldown);
+    }
+
+    private void ResetSpeedBoost()
+    {
+        speed = 5f; // Reset speed
+        speedBoostActive = false;
+    }
+
+    private void DisplayCanvasMessage(string message)
+    {
+        if (canvasText != null)
+        {
+            canvasText.text = message;
+        }
+    }
+
+    private void ClearCanvasMessage()
+    {
+        if (canvasText != null)
+        {
+            canvasText.text = "";
+        }
     }
 
     private void ShootProjectile()
     {
         if (projectilePrefab != null && projectileSpawnPoint != null)
         {
-            // Instantiate the projectile
             GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-
-            // Set projectile's velocity
             Rigidbody2D projectileBody = projectile.GetComponent<Rigidbody2D>();
             if (projectileBody != null)
             {
-                float direction = transform.localScale.x > 0 ? 1 : -1; // Determine direction based on player's facing
+                float direction = transform.localScale.x > 0 ? 1 : -1;
                 projectileBody.linearVelocity = new Vector2(direction * projectileSpeed, 0);
             }
         }
         else
         {
             Debug.LogWarning("Projectile prefab or spawn point is not set!");
+        }
+    }
+
+    private List<GameObject> GetActivePlayers()
+    {
+        List<GameObject> activePlayers = new List<GameObject>();
+        for (int i = 1; i <= 4; i++)
+        {
+            GameObject player = GameObject.FindWithTag("Player " + i);
+            if (player != null)
+            {
+                activePlayers.Add(player);
+            }
+        }
+        return activePlayers;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            grounded = true;
         }
     }
 
@@ -216,31 +387,6 @@ public class PlayerController : MonoBehaviour
             constrainedPosition.y = Mathf.Clamp(constrainedPosition.y, minY, maxY);
 
             transform.position = constrainedPosition;
-        }
-    }
-
-    private List<GameObject> GetActivePlayers()
-    {
-        List<GameObject> activePlayers = new List<GameObject>();
-
-        // Check for each player tag and add active players to the list
-        for (int i = 1; i <= 4; i++)
-        {
-            GameObject player = GameObject.FindWithTag("Player " + i);
-            if (player != null)
-            {
-                activePlayers.Add(player);
-            }
-        }
-
-        return activePlayers;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            grounded = true;
         }
     }
 }

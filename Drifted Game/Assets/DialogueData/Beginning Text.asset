@@ -14,27 +14,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueEntries:
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: Everyone in the world feels negative emotions in their life.
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: Sometimes...\nits because you lost your childhood dream.
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: Or...\nit could be as simple as failing a test,
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: Other times...\nit might be the fear of the unknown.
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: What matters most is how we process these emotions.
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: You have been assigned a mission to help three people process their
       emotions.
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: You will use special technology to head into their mind\nand change
       them from the inside.
   - characterName: Narrarator
+    characterPortrait: {fileID: 0}
     dialogueText: Are you ready?
   responses:
   - responseText: Yes
     dialogueObject: {fileID: 11400000, guid: 9fc74898939b94f4c837dc793ad9924e, type: 2}
-    postDialogueScript: {fileID: 0}
+    postDialogueEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6953107247746662949, guid: 8720e0e04749f4e4b83b6ee2a513c551, type: 3}
+          m_TargetAssemblyTypeName: PostDialogueScreenSwitcher, Assembly-CSharp
+          m_MethodName: LoadScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - responseText: No
     dialogueObject: {fileID: 11400000, guid: 9b55350b8994fdc41985236c04247257, type: 2}
-    postDialogueScript: {fileID: 0}
+    postDialogueEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6953107247746662949, guid: f3f00abfa2cf8b043984a790c27bce5a, type: 3}
+          m_TargetAssemblyTypeName: PostDialogueScreenSwitcher, Assembly-CSharp
+          m_MethodName: Quit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

@@ -6,6 +6,7 @@ public class Players : MonoBehaviour
     [SerializeField] private GameObject Stella;
     [SerializeField] private GameObject Luna;
     [SerializeField] private GameObject Rudy;
+    [SerializeField] private GameObject Bruno;
     [SerializeField] private AudioSource music;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,6 +24,9 @@ public class Players : MonoBehaviour
                     break;
                 case "Rudy":
                     Rudy.SetActive(true);
+                    break;
+                case "Bruno":
+                    Bruno.SetActive(true);
                     break;
             }
         }

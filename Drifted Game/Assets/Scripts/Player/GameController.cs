@@ -5,6 +5,7 @@ public class GameController : MonoBehaviour
 {
     Vector2 startPos;
     SpriteRenderer spriteRenderer;
+    private GameObject currentPlayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -14,6 +15,17 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
+
+        for (int i = 1; i <= 4; i++)
+        {
+            GameObject player = GameObject.FindWithTag("Player " + i);
+            if (player != null && player == gameObject) // Ensure it's this instance
+            {
+                currentPlayer = player;
+                Debug.Log(currentPlayer);
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -21,13 +33,18 @@ public class GameController : MonoBehaviour
     {
         if (collision.CompareTag("Death Plane"))
         {
-            Die();
 
+            Die();
+            if (currentPlayer.CompareTag("Player 2"))
+            {
+                PlayerController.superJumpUsed = false;
+            }
         }
     }
 
     void Die()
     {
+
         StartCoroutine(Respawn(0.5f));
 
     }
