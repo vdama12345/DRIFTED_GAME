@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour
     {
 
         StartCoroutine(Respawn(0.5f));
+        ScoreManager.score = 0;
 
     }
 

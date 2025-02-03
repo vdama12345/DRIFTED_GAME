@@ -7,8 +7,8 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager Instance;
 
     public TextMeshProUGUI scoreText;
-    private int score = 0;
-    private int totalCPUs = 3;
+    [SerializeField] public int score = 0;
+    [SerializeField] private int totalCPUs = 3;
 
 
 
