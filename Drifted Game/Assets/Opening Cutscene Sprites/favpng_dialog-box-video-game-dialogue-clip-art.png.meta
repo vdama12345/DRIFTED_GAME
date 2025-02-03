@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      favpng_dialog-box-video-game-dialogue-clip-art_0: 1086189272917328634
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
