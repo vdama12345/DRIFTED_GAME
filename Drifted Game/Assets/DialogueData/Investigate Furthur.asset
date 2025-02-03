@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Investigate Furthur
   m_EditorClassIdentifier: 
   dialogueEntries:
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: As you reach to open the doorknob. You hear a loud crash from your
+      left.
   - characterName: Stella
     characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
     dialogueText: What is that? Look at the main city,  its shattered into pieces

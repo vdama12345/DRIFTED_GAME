@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BrunoJumpingAnimation_0: -2291443801669352586
+      BrunoJumpingAnimation_1: 6373159991117097616
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

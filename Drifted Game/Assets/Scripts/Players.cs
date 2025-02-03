@@ -10,7 +10,7 @@ public class Players : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        MusicManager.PlayMusic(music);
+        //MusicManager.PlayMusic(music);
         ArrayList active = PlayerManager.getList();
         for(int i = 0; i < active.Count; i++) {
             Debug.Log("i ran");

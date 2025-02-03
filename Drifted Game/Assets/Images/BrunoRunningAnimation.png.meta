@@ -397,7 +397,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BrunoRunningAnimation_0: 2629089037611625604
+      BrunoRunningAnimation_1: -733014679837231153
+      BrunoRunningAnimation_10: -758419330474029470
+      BrunoRunningAnimation_2: -2728320104566182475
+      BrunoRunningAnimation_3: -5638774689172030603
+      BrunoRunningAnimation_4: 5495367273860341464
+      BrunoRunningAnimation_5: 4985267229147736529
+      BrunoRunningAnimation_6: 4876947015926311351
+      BrunoRunningAnimation_7: -2058414195970877897
+      BrunoRunningAnimation_8: -439967604043089001
+      BrunoRunningAnimation_9: 1838609504512808642
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

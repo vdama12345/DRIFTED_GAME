@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Investigate the portal
   m_EditorClassIdentifier: 
   dialogueEntries:
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: You actually want to go in there, I appluad your bravery\n but
+      count me out.
   - characterName: Stella
     characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
     dialogueText: Okay beacuase Rudy is too much of a wuss, we'll go in alone\nAre

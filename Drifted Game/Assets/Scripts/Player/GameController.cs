@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
     void Die()
     {
         StartCoroutine(Respawn(0.5f));
+
     }
 
     IEnumerator Respawn(float duration)

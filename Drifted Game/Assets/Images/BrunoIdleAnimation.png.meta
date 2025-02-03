@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BrunoIdleAnimation_0: 4095872672946744781
+      BrunoIdleAnimation_1: 8322181769472010300
+      BrunoIdleAnimation_2: 1335613423164562475
+      BrunoIdleAnimation_3: 60078767406172579
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
