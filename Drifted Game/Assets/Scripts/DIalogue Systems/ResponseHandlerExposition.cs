@@ -5,11 +5,14 @@ using System.Collections.Generic;
 
 public class ResponseHandlerExposition : MonoBehaviour
 {
-    [SerializeField] private RectTransform responseBox;
-    [SerializeField] private RectTransform responseButtonTemplate;
-    [SerializeField] private RectTransform responseContainer;
+    [SerializeField] private GameObject option1;
+    [SerializeField] private GameObject option2;
+    [SerializeField] private GameObject responseBox1;
+    [SerializeField] private GameObject responseBox2;
 
     private DialogueExposition dialogueUI;
+    private ResponseEvent[] responseEvents;
+
     private List<GameObject> tempResponseButtons = new List<GameObject>();
 
     private void Start()
@@ -17,45 +20,36 @@ public class ResponseHandlerExposition : MonoBehaviour
         dialogueUI = GetComponent<DialogueExposition>();
     }
 
-    public void ShowResponses(Response[] responses)
+    public void AddResponseEvents(ResponseEvent[] responseEvents)
     {
-        float responseBoxHeight = 0;
-
-        foreach (Response response in responses)
-        {
-            GameObject responseButton = Instantiate(responseButtonTemplate.gameObject, responseContainer);
-            responseButton.gameObject.SetActive(true);
-            responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
-            responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickedResponse(response));
-
-            tempResponseButtons.Add(responseButton);
-
-            responseBoxHeight += responseButtonTemplate.sizeDelta.y;
-        }
-
-        responseBox.sizeDelta = new Vector2(responseBox.sizeDelta.x, responseBoxHeight);
-        responseBox.gameObject.SetActive(true);
+        this.responseEvents = responseEvents;
     }
 
-    private void OnPickedResponse(Response response)
+    public void ShowResponses(Response[] responses)
     {
-        responseBox.gameObject.SetActive(false);
+        responseBox1.SetActive(true);
+        responseBox2.SetActive(true);
 
-        foreach (GameObject responseButton in tempResponseButtons)
+        option1.GetComponent<TMP_Text>().text = responses[0].ResponseText;
+        option1.GetComponent<Button>().onClick.AddListener(() => OnPickedResponse(responses[0], 0));
+
+        option2.GetComponent<TMP_Text>().text = responses[1].ResponseText;
+        option2.GetComponent<Button>().onClick.AddListener(() => OnPickedResponse(responses[1], 1));
+    }
+
+    private void OnPickedResponse(Response response, int responseIndex)
+    {
+        responseBox1.gameObject.SetActive(false);
+        responseBox2.gameObject.SetActive(false);
+
+        if (responseEvents != null && responseIndex <= responseEvents.Length)
         {
-            Destroy(responseButton);
+            responseEvents[responseIndex].OnPickedResponse?.Invoke();
         }
-
-        tempResponseButtons.Clear();
 
         dialogueUI.ShowDialogue(response.DialogueObject);
 
-        // Call post-dialogue script if defined
-        if (response.PostDialogueScript != null)
-        {
-            var postAction = response.PostDialogueScript as IPostDialogueAction;
-            postAction?.PostDialogueAction();
-        }
+        response.InvokePostDialogueEvent();
     }
 }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,7 +15,6 @@ public class DialogueExposition : MonoBehaviour
 
     public bool IsOpen { get; private set; }
 
-    private bool play = false;
     private ResponseHandlerExposition responseHandler;
     private TypewriterEffect typewriterEffect;
 
@@ -31,6 +31,11 @@ public class DialogueExposition : MonoBehaviour
         dialogueBox.SetActive(true);
         StartCoroutine(StepThroughDialogue(dialogueObject));
     }
+
+    public void AddResponseEvents(ResponseEvent[] responseEvents)
+    {
+        responseHandler.AddResponseEvents(responseEvents);
+    }
     private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
     {
         int panelIndex = 0;
@@ -42,9 +47,11 @@ public class DialogueExposition : MonoBehaviour
             panelIndex++;
         }
 
-        for (int i = 0; i < dialogueObject.Dialogue.Length; i++)
+        foreach (var entry in dialogueObject.DialogueEntries)
         {
-            string dialogue = dialogueObject.Dialogue[i];
+            string dialogue = entry.dialogueText;
+
+            yield return RunTypingEffect(dialogue);
 
             // Show the next panel if available
             if (panelIndex < panels.Length)
@@ -53,9 +60,7 @@ public class DialogueExposition : MonoBehaviour
                 panelIndex++;
             }
 
-            yield return typewriterEffect.Run(dialogue, textLabel);
-
-            if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses) break;
+            yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
         }
 
@@ -66,6 +71,21 @@ public class DialogueExposition : MonoBehaviour
         else
         {
             CloseDialogueBox();
+        }
+    }
+
+    private IEnumerator RunTypingEffect(string dialogue)
+    {
+        typewriterEffect.Run(dialogue, textLabel);
+
+        while (typewriterEffect.isRunning)
+        {
+            yield return null;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                typewriterEffect.stop();
+            }
         }
     }
 

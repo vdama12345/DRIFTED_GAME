@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
+  m_Name: Portal Dialogue
+  m_EditorClassIdentifier: 
+  dialogueEntries:
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: It feels like its pulling me in. It might have its own gravitational
+      force,\nI need to do some experiments on this force of nature
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: Why would you ever want to touch that thing. Its gross and weird.
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: Oh please, we won't know anything unless we try.\nYou know what
+      let's ask the new guy
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: Yea, but he'll obviously choose not to touch that weird thing.
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: Ignore him, Anyhow, Should we investigate the portal or leave it
+      be?
+  responses:
+  - responseText: Investigate the Portal
+    dialogueObject: {fileID: 11400000, guid: b23ee3f68093e8d4d8c52a9b63e864f7, type: 2}
+    postDialogueScript: {fileID: 0}
+  - responseText: Leave it be
+    dialogueObject: {fileID: 11400000, guid: 1b4788a2a647a3f48b761c91ea432c43, type: 2}
+    postDialogueScript: {fileID: 0}

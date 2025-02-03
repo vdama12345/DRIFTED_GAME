@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
   m_Name: Reject Mission
   m_EditorClassIdentifier: 
-  dialogue: []
+  dialogueEntries:
+  - characterName: Narrarator
+    dialogueText: Hopefully you will return to accomplish your task.
   responses: []

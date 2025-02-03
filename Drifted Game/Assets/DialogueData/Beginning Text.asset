@@ -12,8 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
   m_Name: Beginning Text
   m_EditorClassIdentifier: 
-  dialogue:
-  - 
-  - 
-  - 
-  responses: []
+  dialogueEntries:
+  - characterName: Narrarator
+    dialogueText: Everyone in the world feels negative emotions in their life.
+  - characterName: Narrarator
+    dialogueText: Sometimes...\nits because you lost your childhood dream.
+  - characterName: Narrarator
+    dialogueText: Or...\nit could be as simple as failing a test,
+  - characterName: Narrarator
+    dialogueText: Other times...\nit might be the fear of the unknown.
+  - characterName: Narrarator
+    dialogueText: What matters most is how we process these emotions.
+  - characterName: Narrarator
+    dialogueText: You have been assigned a mission to help three people process their
+      emotions.
+  - characterName: Narrarator
+    dialogueText: You will use special technology to head into their mind\nand change
+      them from the inside.
+  - characterName: Narrarator
+    dialogueText: Are you ready?
+  responses:
+  - responseText: Yes
+    dialogueObject: {fileID: 11400000, guid: 9fc74898939b94f4c837dc793ad9924e, type: 2}
+    postDialogueScript: {fileID: 0}
+  - responseText: No
+    dialogueObject: {fileID: 11400000, guid: 9b55350b8994fdc41985236c04247257, type: 2}
+    postDialogueScript: {fileID: 0}
