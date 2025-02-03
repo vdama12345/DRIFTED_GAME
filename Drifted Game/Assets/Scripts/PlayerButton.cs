@@ -9,6 +9,8 @@ public class PlayerButton : MonoBehaviour
     [SerializeField] private GameObject playButton;
     [SerializeField] private GameObject select;
     [SerializeField] private TMPro.TextMeshProUGUI buttonText;
+    [SerializeField] private GameObject nextPlayer;
+    [SerializeField] private GameObject previousPlayer;
     void Start() {
         playButton.GetComponent<Button>().onClick.AddListener(() => PlayerCheck());
         
@@ -16,8 +18,20 @@ public class PlayerButton : MonoBehaviour
     void PlayerCheck() {
         if(PlayerManager.addPlayer(buttonText.text)) {
             select.SetActive(true);
+            if(!buttonText.text.Equals("Bruno")) {
+                nextPlayer.SetActive(true);
+            }   
+            if(!buttonText.text.Equals("Stella")) {
+                previousPlayer.SetActive(false);
+            }
         } else {
             select.SetActive(false);
+            if(!buttonText.text.Equals("Bruno")) {
+                nextPlayer.SetActive(false);
+            } 
+            if(!buttonText.text.Equals("Stella")) {
+                previousPlayer.SetActive(true);
+            }
         }
     }
 
