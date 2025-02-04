@@ -1,21 +1,24 @@
+using System.Collections.Generic;
 using UnityEngine;
-
 public class SwitchMovingPlatform : MonoBehaviour
 {
-    private MovePlatformUNactivated movingPlatform;
+    public MovePlatformUNactivated platform;
+    private bool movingToA = true;
 
-    private void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Ensure this script is on the same GameObject as MovingPlatform or properly assigned
-        movingPlatform = GetComponent<MovePlatformUNactivated>();
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Check for collision with the "Projectile" tag
-        if (collision.gameObject.CompareTag("Projectile") && movingPlatform != null)
+        if (collision.CompareTag("Projectile"))
         {
-            movingPlatform.TriggerPlatformMovement();
+            if (movingToA)
+            {
+                platform.MoveToB();
+                movingToA = false;
+            }
+            else
+            {
+                platform.MoveToA();
+                movingToA = true;
+            }
         }
     }
 }
