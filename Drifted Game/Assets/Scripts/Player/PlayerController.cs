@@ -17,8 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode up;
     [SerializeField] private KeyCode action;
     [SerializeField] private Text canvasText; // Text to display messages
-    private bool isWallRunning = false; // This will keep track of whether the player is currently wall running
-
+    private bool isWallRunning = false; // Track whether the player is wall running
 
     private GameObject currentPlayer;
     private bool grounded;
@@ -34,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     private List<GameObject> players;
 
+    // <-- New: List to store the CPU collectibles picked up by this player.
+    private List<CPUCollectible> collectedCPUs = new List<CPUCollectible>();
+
     public DialogueUI DialogueUI => dialogueUI;
     public IInteractable Interactable { get; set; }
 
@@ -47,7 +49,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         players = GetActivePlayers();
-
         SetCurrentPlayer();
     }
 
@@ -357,7 +358,7 @@ public class PlayerController : MonoBehaviour
                 mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, averagePosition, Time.deltaTime * 5f);
 
                 // Adjust camera zoom based on player spread
-                float targetZoom = Mathf.Clamp(5f + maxDistance * 0.25f, 6f, 30f); // Clamp zoom between 10 and 30
+                float targetZoom = Mathf.Clamp(5f + maxDistance * 0.25f, 6f, 30f); // Clamp zoom between 6 and 30
                 mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetZoom, Time.deltaTime * 2f);
             }
         }
@@ -391,5 +392,27 @@ public class PlayerController : MonoBehaviour
 
             transform.position = constrainedPosition;
         }
+    }
+
+    // <-- New method to allow the CPUCollectible script to add a CPU to this player's inventory.
+    public void AddCollectedCPU(CPUCollectible cpu)
+    {
+        if (!collectedCPUs.Contains(cpu))
+        {
+            collectedCPUs.Add(cpu);
+        }
+    }
+
+    // <-- New method to reactivate all CPUs collected by this player (e.g., on player death)
+    public void RespawnCPUs()
+    {
+        foreach (CPUCollectible cpu in collectedCPUs)
+        {
+            if (cpu != null)
+            {
+                cpu.Reactivate();
+            }
+        }
+        collectedCPUs.Clear();
     }
 }
