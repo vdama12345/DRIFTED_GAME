@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
+  m_Name: Investigate the portal
+  m_EditorClassIdentifier: 
+  dialogueEntries:
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: You actually want to go in there, I appluad your bravery\n but
+      count me out.
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: Okay beacuase Rudy is too much of a wuss, we'll go in alone\nAre
+      you read---
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: 'I mean if all of you are going then I don''t want to feel left
+      out. '
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: Now that we have everyone,  including the wuss, we can start\nAre
+      you ready to enter the portal?
+  responses:
+  - responseText: Enter the Portal
+    dialogueObject: {fileID: 0}
+    postDialogueEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6953107247746662949, guid: 629f83ffe301042409463a3fdc964397, type: 3}
+          m_TargetAssemblyTypeName: PostDialogueScreenSwitcher, Assembly-CSharp
+          m_MethodName: LoadScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - responseText: Wait a Second
+    dialogueObject: {fileID: 11400000, guid: 672123f92e5503241b6ac1c8f83fdf52, type: 2}
+    postDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []

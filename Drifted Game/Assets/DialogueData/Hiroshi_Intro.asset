@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
+  m_Name: HIroshi_Intro_2
+  m_EditorClassIdentifier: 
+  dialogueEntries:
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: 'Isn''t this that one businessman''s house, the one that owns Hiroshi:
+      Industries.'
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: He always grumpy all the time\nIf I had that much money I wouldn't
+      be grumpy
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: You look past the window and see him have a stern look on his face.
+      He looks awfully troubled.
+  - characterName: Stella
+    characterPortrait: {fileID: -2711890655855541152, guid: 531aad25f41920647a252e19be1d8703, type: 3}
+    dialogueText: I wonder if he's alright he looks like he hasn't smiled in a long
+      time
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: 'You watch as he turns on the TV, intensely watching a rocket launch
+      that happened a few days ago '
+  - characterName: Rudy
+    characterPortrait: {fileID: 5456615189414175407, guid: 1929d93748fe51b43a8beec4dfa6499c, type: 3}
+    dialogueText: He really likes rockets, huh. or maybe he hates them. Can't tell
+      which is which
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: His face slowly contracts more.\nYou start to wonder what made
+      him feel so uncomfortable
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: You contemplate going inside to help him
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: Would you like to help him
+  responses:
+  - responseText: Leave him be
+    dialogueObject: {fileID: 11400000, guid: f9e88b7ed360cf44ebfa5dacc441a0af, type: 2}
+    postDialogueScript: {fileID: 0}
+  - responseText: Investigate furthur
+    dialogueObject: {fileID: 11400000, guid: 9db1131e0d21f8f44aa83575d7d69b36, type: 2}
+    postDialogueScript: {fileID: 0}

@@ -4,14 +4,32 @@ using System.Collections;
 using static UnityEngine.Rendering.DebugUI;
 using System;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class TypewriterEffect : MonoBehaviour
 {
+
     [SerializeField] private float typewriterSpeed = 50f;
 
-    public Coroutine Run(string textToType, TMP_Text textLabel)
+    public bool isRunning {  get; private set; }
+
+    private readonly Dictionary<HashSet<char>, float> punctuations = new Dictionary<HashSet<char>, float>()
     {
-        return StartCoroutine(TypeText(textToType, textLabel));
+        {new HashSet<char>{'.', '!', '?' }, 0.6f },
+        {new HashSet<char>{',', ';', ':' }, 0.3f },
+    };
+
+    private Coroutine typingCoroutine;
+
+    public void Run(string textToType, TMP_Text textLabel)
+    {
+        typingCoroutine = StartCoroutine(TypeText(textToType, textLabel));
+    }
+
+    public void stop()
+    {
+        StopCoroutine(typingCoroutine);
+        isRunning = false;
     }
 
     private IEnumerator TypeText(string textToType, TMP_Text textLabel)
@@ -24,16 +42,45 @@ public class TypewriterEffect : MonoBehaviour
 
         while (charIndex < textToType.Length)
         {
+            int lastCharIndex = charIndex;
+
             t += Time.deltaTime * typewriterSpeed;
             charIndex = Mathf.FloorToInt(t);
             charIndex = Mathf.Clamp(charIndex, 0, textToType.Length);
+
+            for (int i = lastCharIndex; i < charIndex; i++)
+            {
+                bool isLast = i >= textToType.Length - 1;
+
+                if (IsPunctuation(textToType[i], out float waitTime) && !isLast && !IsPunctuation(textToType[i + 1], out _))
+                {
+                    yield return new WaitForSeconds(waitTime);
+                }
+
+                textLabel.text = textToType.Substring(0, i + 1);
+            }
 
             textLabel.text = textToType.Substring(0, charIndex);
 
             yield return null;
         }
 
-        textLabel.text = textToType;
+        isRunning = false;
 
+    }
+
+    private bool IsPunctuation(char character, out float waitTime)
+    {
+        foreach (KeyValuePair<HashSet<char>, float> punctuationCategory in punctuations)
+        {
+            if (punctuationCategory.Key.Contains(character))
+            {
+                waitTime = punctuationCategory.Value;
+                return true;
+            }
+        }
+
+        waitTime = default;
+        return false;
     }
 }

@@ -11,6 +11,11 @@ TagManager:
   - Player 4
   - Death Plane
   - Platform Switch
+  - Wall
+  - CPU 1
+  - CPU 2
+  - CPU 3
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -18,7 +23,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Players
+  - Player
   - 
   - 
   - 

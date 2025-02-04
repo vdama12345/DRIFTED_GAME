@@ -1,42 +1,59 @@
 using UnityEngine;
 using TMPro;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class DialogueUI : MonoBehaviour
 {
- 
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TMP_Text textLabel;
+    [SerializeField] private TMP_Text nameLabel;
+    [SerializeField] private RawImage portraitImage; // RawImage for character portraits
 
     public bool IsOpen { get; private set; }
 
     private ResponseHandler responseHandler;
     private TypewriterEffect typewriterEffect;
-    
+
     private void Start()
     {
         typewriterEffect = GetComponent<TypewriterEffect>();
         responseHandler = GetComponent<ResponseHandler>();
         CloseDialogueBox();
     }
+
     public void ShowDialogue(DialogueObject dialogueObject)
     {
-        IsOpen = true;  
+        IsOpen = true;
         dialogueBox.SetActive(true);
         StartCoroutine(StepThroughDialogue(dialogueObject));
     }
+    public void AddResponseEvents(ResponseEvent[] responseEvents)
+    {
+        responseHandler.AddResponseEvents(responseEvents);
+    }
+
     private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
     {
-
-        for (int i = 0; i < dialogueObject.Dialogue.Length; i++)
+        foreach (var entry in dialogueObject.DialogueEntries)
         {
-            string dialogue = dialogueObject.Dialogue[i];
-            yield return typewriterEffect.Run(dialogue, textLabel);
+            nameLabel.text = entry.characterName;
+            textLabel.text = string.Empty;
 
-            if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses) break;
+            if (entry.characterPortrait)
+            {
+                portraitImage.texture = entry.characterPortrait.texture;
+                portraitImage.color = Color.white; // Fully visible
+            }
+            else
+            {
+                portraitImage.texture = null;
+                portraitImage.color = new Color(1, 1, 1, 0); // Fully transparent
+            }
+
+            yield return RunTypingEffect(entry.dialogueText);
+
+            yield return null;
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
         }
 
@@ -48,14 +65,29 @@ public class DialogueUI : MonoBehaviour
         {
             CloseDialogueBox();
         }
-        
     }
-    private void CloseDialogueBox()
+
+    private IEnumerator RunTypingEffect(string dialogue)
     {
-        IsOpen = false; 
+        typewriterEffect.Run(dialogue, textLabel);
+
+        while (typewriterEffect.isRunning)
+        {
+            yield return null;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                typewriterEffect.stop();
+            }
+        }
+    }
+
+    public void CloseDialogueBox()
+    {
+        IsOpen = false;
         dialogueBox.SetActive(false);
         textLabel.text = string.Empty;
+        nameLabel.text = string.Empty;
+        portraitImage.texture = null; // Clear the portrait
     }
 }
-
-

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d09bfc7f1f5ba4db683dfdd34717e0, type: 3}
+  m_Name: HIroshi_Intro
+  m_EditorClassIdentifier: 
+  dialogueEntries:
+  - characterName: 
+    characterPortrait: {fileID: 0}
+    dialogueText: Would you like to help him
+  responses:
+  - responseText: Leave him be
+    dialogueObject: {fileID: 11400000}
+    postDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  - responseText: Investigate Further
+    dialogueObject: {fileID: 11400000, guid: 9db1131e0d21f8f44aa83575d7d69b36, type: 2}
+    postDialogueEvent:
+      m_PersistentCalls:
+        m_Calls: []
